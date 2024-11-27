@@ -1,6 +1,8 @@
 .banner-css{
     background-image: url('../src/assets/images/more/3.png');
     background-repeat: none;
-    background-size: cover;
     background-position: contain;
+    background-size: cover;
+    /* background-size: cover;
+    background-position: contain; */
 }

@@ -9,17 +9,32 @@ import {
 import Home from './Home';
 import Error from './Error';
 import MainHome from './MainHome';
+import AddCoffee from './AddCoffee';
+import CoffeeDetails from './CoffeeDetails';
+import UpdateCoffee from './UpdateCoffee';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home/>,
-    errorElement:<Error></Error>,
+    errorElement:<Error/>,
     children:[
       {
         path: "/",
         element: <MainHome/>,
-      }
+      },
+      {
+        path: "/add-coffee",
+        element: <AddCoffee/>,
+      },
+      {
+        path: "/update-coffee",
+        element: <UpdateCoffee/>,
+      },
+      {
+        path: "/coffee-details",
+        element: <CoffeeDetails/>,
+      },
     ]
   },
 ]);
