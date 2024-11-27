@@ -1,8 +1,47 @@
 import { FaArrowCircleLeft } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import '../src/Coffee.css'
+import Swal from 'sweetalert2';
 
 const AddCoffee = () => {
+
+    
+
+    const handleAddCoffee = e => {
+        e.preventDefault();
+
+        const name = e.target.name.value;
+        const chef = e.target.chef.value;
+        const supplier = e.target.supplier.value;
+        const taste = e.target.taste.value;
+        const category = e.target.category.value;
+        const details = e.target.details.value;
+        const photo = e.target.photo.value;
+
+        const newCoffee = { name, chef, supplier, taste, category, details, photo }
+
+        // send data to the server and database
+        fetch('http://localhost:5000/coffees', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(newCoffee)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: 'Success!',
+                        text: 'Coffee added successfully',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                    });
+                    e.target.reset();
+                }
+            })
+
+    }
 
     const navigate = useNavigate();
 
@@ -17,12 +56,12 @@ const AddCoffee = () => {
                         <FaArrowCircleLeft /> Back to Home
                     </button>
                 </div>
-                <div className='bg-[#F4F3F0] rounded-md  mb-10'>
+                <div className='bg-[#F4F3F0] rounded-md mt-5  mb-10'>
                     <div className='text-center space-y-4 py-10'>
                         <h1 className='text-[#331a15] text-2xl md:text-3xl font-rancho font-bold'>Add New Coffee</h1>
                         <p className='text-[#1B1A1AB3] w-4/5 text-center mx-auto'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, et harum? Cum quisquam, facere esse quasi ratione illo molestiae natus?</p>
                     </div>
-                    <form  className="card-body">
+                    <form  className="card-body" onSubmit={handleAddCoffee}>
                         {/* form first row */}
                         <div className='flex flex-col md:flex-row gap-4'>
                             <div className="form-control flex-1">

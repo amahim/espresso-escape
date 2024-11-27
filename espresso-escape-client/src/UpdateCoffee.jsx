@@ -18,7 +18,7 @@ const UpdateCoffee = () => {
                         <FaArrowCircleLeft /> Back to Home
                     </button>
                 </div>
-                <div className='bg-[#F4F3F0] rounded-md mb-10'>
+                <div className='bg-[#F4F3F0] rounded-md mt-5 mb-10'>
                     <div className='text-center space-y-4 py-10'>
                         <h1 className='text-[#331a15] text-2xl md:text-3xl font-rancho font-bold'>Update Coffee Details</h1>
                         <p className='text-[#1B1A1AB3] w-4/5 text-center mx-auto'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Est, et harum? Cum quisquam, facere esse quasi ratione illo molestiae natus?</p>
