@@ -1,9 +1,44 @@
 import { FaEye, FaPen } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const DisplayCoffee = ({coffee}) => {
+const DisplayCoffee = ({coffee,coffees,setCoffees}) => {
 
     const {_id,photo,name,chef,taste} = coffee;
+
+    const handleDelete = _id =>{
+
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then((result) => {
+            if (result.isConfirmed) {
+            
+                fetch(`http://localhost:5000/coffees/${_id}`, {
+                    method: 'DELETE',
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            Swal.fire(
+                                "Deleted!",
+                                "Your Coffee has been deleted.",
+                                "success"
+                              );
+                              const remaining = coffees.filter(cof => cof._id !== _id);
+                              setCoffees(remaining)
+                        }
+                    })
+            }
+          });
+
+    }
 
     return (
         <div>
@@ -19,9 +54,10 @@ const DisplayCoffee = ({coffee}) => {
                         <p>Taste: {taste}</p>
                     </div>
                     <div className="card-actions  ">
-                    <button className="btn btn-info"><FaEye/></button>
-                    <button className="btn btn-success"><FaPen/></button>
-                    <button className="btn btn-error"><MdDelete /></button>
+                    <button className="btn bg-[#D2B48C] border-none text-white text-xl"><FaEye/></button>
+                    <Link to={`update-coffee/${_id}`}>
+                        <button className="btn bg-[#3C393B] border-none text-white text-xl"><FaPen/></button></Link>
+                    <button  onClick={()=> handleDelete(_id)} className="btn btn-error text-xl text-white"><MdDelete /></button>
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@ const CoffeesHome = () => {
             {/* cups */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-10 w-4/5 mx-auto">
                 {
-                    coffees.map(coffee=> <DisplayCoffee key={coffees._id} coffee={coffee}/>)
+                    coffees.map(coffee=> <DisplayCoffee coffees={coffees} setCoffees={setCoffees} key={coffees._id} coffee={coffee}/>)
                 }
             </div>
         </div>

@@ -30,12 +30,53 @@ async function run() {
         const result = await coffeeCollection.insertOne(newCoffee)
         res.send(result)
     })
-    // get/read coffee data ^^^^^^
+    // get/read coffee data ^^^^^^(post thn get)^^^^^^
     app.get('/coffees',async(req,res)=>{
       const cursor = coffeeCollection.find()
       const result = await cursor.toArray()
       res.send(result)
    })
+
+    //update part 1
+    app.get('/coffees/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await coffeeCollection.findOne(query);
+      res.send(result);
+  })
+
+    // update part 2
+      app.put('/coffees/:id', async (req, res) => {
+        const id = req.params.id;
+        const filter = { _id: new ObjectId(id) };
+        const options = { upsert: true };
+        const updatedCoffee = req.body;
+        const coffee = {
+            $set: {
+                name: updatedCoffee.name,
+                chef: updatedCoffee.chef,
+                supplier: updatedCoffee.supplier,
+                taste: updatedCoffee.taste,
+                category: updatedCoffee.category,
+                details: updatedCoffee.details,
+                photo: updatedCoffee.photo
+            }
+        }
+
+        const result = await coffeeCollection.updateOne(filter, coffee, options )
+
+        res.send(result);
+      })
+      
+      // deleteee
+      app.delete('/coffees/:id', async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) }
+        const result = await coffeeCollection.deleteOne(query);
+        res.send(result);
+    })
+
+     
 
 
     // Send a ping to confirm a successful connection
